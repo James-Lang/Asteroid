@@ -24,7 +24,7 @@ function preload() {
 
 function setup() {
   // shipey = NeuralNetwork.deserialize(brainJSON);
-createCanvas(400, 400);
+createCanvas(100, 100);
 for (let i = 0; i < totalShips; i++){
 // let ship = new Ship(shipey);
 let ship = new Ship();
