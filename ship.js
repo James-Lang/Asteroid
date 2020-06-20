@@ -26,6 +26,7 @@ this.id = random(10);
 this.score = 0;
 this.maxFuel = 75;
 this.fuel = 75;
+this.shots = 0;
 if (brain instanceof NeuralNetwork) {
   // console.log('copied');
   this.brain = brain.copy();
@@ -36,7 +37,7 @@ if (brain instanceof NeuralNetwork) {
 
 } else {
 
-  this.brain = new NeuralNetwork(10, 32, 5);
+  this.brain = new NeuralNetwork(15, 32, 5);
 }
 }
 
@@ -81,6 +82,8 @@ if (max(diff) < record) {
   let moving = this.isBoosting;
   let asteroidX = closest.pos.x;
   let asteroidY = closest.pos.y;
+  let asteroidXvel = closest.vel.x
+  let asteroidYvel = closest.vel.y
 
 
   inputs[0] = x;
@@ -92,7 +95,12 @@ if (max(diff) < record) {
   inputs[6] = lxr;
   inputs[7] = this.heading;
   inputs[8] = velX;
-    inputs[9] = velY;
+  inputs[9] = velY;
+  inputs[10] = asteroidXvel
+  inputs[11] = asteroidYvel
+  inputs[12] = this.fuel;
+  inputs[13] = rote;
+  inputs[14] = this.shots
   let action = this.brain.predict(inputs);
   // console.log(action);
   if (action[0] > 0.8) {
