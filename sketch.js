@@ -17,6 +17,8 @@ let highestScore = 0;
 let options = false;
 let toggle = '+'
 let cookie = 1;
+let penalty = 0.95;
+let spann = 10;
 
 function preload() {
   // brainJSON = loadJSON('myship.json');
@@ -60,6 +62,14 @@ shipSlider = createSlider(1, 50, 15);
 shipSlider.position(45, 325);
 shipSlider.style('width', '150px');
 
+penSlider = createSlider(1, 99, 95);
+penSlider.position(45, 375);
+penSlider.style('width', '150px');
+
+spanSlider = createSlider(1, 100, 10);
+spanSlider.position(45, 420);
+spanSlider.style('width', '150px');
+
 optButton = createButton(toggle);
 optButton.position(10, 10);
 optButton.mouseClicked(toggleOpt);
@@ -97,6 +107,8 @@ if (options == true){
   astSlider.show();
   cookieSlider.show();
   shipSlider.show();
+  penSlider.show();
+  spanSlider.show();
 push()
 fill('white')
 textSize(30)
@@ -107,6 +119,8 @@ text('BestScore: ' + round(highestScore,3), 40, 160)
 text('Total Asteroids: ' + totalAsteroids, 40, 200)
 text('Reward for shooting: ' + cookie, 40, 265)
 text('Total Ships (resets game): ' + totalShips, 40, 320)
+text('Penalty for Missing (lower is worse): ' + penalty, 40, 370)
+text('reward for surviving: ' + spann, 40, 415)
 pop()
 }
 else {
@@ -114,6 +128,8 @@ else {
   astSlider.hide();
   cookieSlider.hide();
   shipSlider.hide();
+  penSlider.hide();
+  spanSlider.hide();
 }
 let speed = speedSlider.value();
 totalAsteroids = astSlider.value();
@@ -121,6 +137,8 @@ maxAsteroids = astSlider.value();
 cookie = cookieSlider.value();
 totalShips = shipSlider.value();
 cycles = speed;
+penalty = penSlider.value()/100;
+spann = spanSlider.value()/100
 if (asteroids.length == 0){
   for (let i = 0; i < totalAsteroids; i++){
   asteroids.push(new Asteroid());
@@ -137,7 +155,7 @@ for (let i = lazers.length - 1; i >= 0; i--){
 if (lazers[i].edge()){
   for (let j = activeShips.length - 1; j >= 0; j--){
     if (activeShips[j] && activeShips[j].id == lazers[i].id) {
-      activeShips[j].score = activeShips[j].score * 0.90;
+      activeShips[j].score = activeShips[j].score * penalty;
     }
   }
   lazers.splice(i, 1);
@@ -175,7 +193,7 @@ if (activeShips.length == 0) {
 for (let i = activeShips.length - 1; i >= 0; i--){
 activeShips[i].turn();
 activeShips[i].edge();
-activeShips[i].update();
+activeShips[i].update(spann);
 if (asteroids[0]){
 activeShips[i].think(asteroids);
 }
