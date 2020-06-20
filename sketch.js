@@ -19,6 +19,7 @@ let toggle = '+'
 let cookie = 1;
 let penalty = 0.95;
 let spann = 10;
+let mutationRate = 0.5;
 
 function preload() {
   // brainJSON = loadJSON('myship.json');
@@ -47,28 +48,32 @@ function setup() {
 createCanvas(1200, 1200);
 newGame();
 speedSlider = createSlider(1, 100, 1);
-speedSlider.position(45, 40);
+speedSlider.position(45, 20);
 speedSlider.style('width', '150px');
 
 astSlider = createSlider(5, 20, 5);
-astSlider.position(45, 220);
+astSlider.position(45, 185);
 astSlider.style('width', '150px');
 
 cookieSlider = createSlider(1, 100, 1);
-cookieSlider.position(45, 274);
+cookieSlider.position(45, 250);
 cookieSlider.style('width', '150px');
 
 shipSlider = createSlider(1, 50, 15);
-shipSlider.position(45, 325);
+shipSlider.position(45, 300);
 shipSlider.style('width', '150px');
 
 penSlider = createSlider(1, 99, 95);
-penSlider.position(45, 375);
+penSlider.position(45, 350);
 penSlider.style('width', '150px');
 
-spanSlider = createSlider(1, 100, 10);
-spanSlider.position(45, 420);
+spanSlider = createSlider(1, 100, 1);
+spanSlider.position(45, 400);
 spanSlider.style('width', '150px');
+
+mutSlider = createSlider(1, 10, 5);
+mutSlider.position(45, 450);
+mutSlider.style('width', '150px');
 
 optButton = createButton(toggle);
 optButton.position(10, 10);
@@ -109,18 +114,20 @@ if (options == true){
   shipSlider.show();
   penSlider.show();
   spanSlider.show();
+  mutSlider.show();
 push()
 fill('white')
 textSize(30)
-text('Speed: ' + cycles, 40, 30)
+text('Speed: ' + cycles, 200, 40)
 text('Generation: ' + generations, 40, 80)
 text('Alive: ' + activeShips.length, 40, 120)
 text('BestScore: ' + round(highestScore,3), 40, 160)
-text('Total Asteroids: ' + totalAsteroids, 40, 200)
-text('Reward for shooting: ' + cookie, 40, 265)
-text('Total Ships (resets game): ' + totalShips, 40, 320)
-text('Penalty for Missing (lower is worse): ' + penalty, 40, 370)
-text('reward for surviving: ' + spann, 40, 415)
+text('Total Asteroids: ' + totalAsteroids, 200, 200)
+text('Reward for shooting: ' + cookie, 200, 260)
+text('Total Ships (resets game): ' + totalShips, 200, 315)
+text('Penalty for Missing (lower is worse): ' + penalty, 200, 365)
+text('reward for surviving: ' + spann, 200, 410)
+text('mutation Rate: ' + mutationRate, 200, 465)
 pop()
 }
 else {
@@ -130,6 +137,7 @@ else {
   shipSlider.hide();
   penSlider.hide();
   spanSlider.hide();
+  mutSlider.hide();
 }
 let speed = speedSlider.value();
 totalAsteroids = astSlider.value();
@@ -138,7 +146,8 @@ cookie = cookieSlider.value();
 totalShips = shipSlider.value();
 cycles = speed;
 penalty = penSlider.value()/100;
-spann = spanSlider.value()/100
+spann = spanSlider.value()/1000
+mutationRate = mutSlider.value()/10;
 if (asteroids.length == 0){
   for (let i = 0; i < totalAsteroids; i++){
   asteroids.push(new Asteroid());
