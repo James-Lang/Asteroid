@@ -22,21 +22,29 @@ function preload() {
   // brainJSON = loadJSON('myship.json');
 }
 
+function newGame() {
+  allShips = []
+  for (let i = 0; i < totalShips; i++){
+  // let ship = new Ship(shipey);
+  let ship = new Ship();
+  activeShips[i] = ship;
+  allShips[i] = ship;
+  }
+  for (let i = 0; i < totalAsteroids; i++){
+    if (totalAsteroids < maxAsteroids){
+  asteroids.push(new Asteroid());
+  }
+  }
+
+}
+
+
+
 function setup() {
   // shipey = NeuralNetwork.deserialize(brainJSON);
 createCanvas(1200, 1200);
-for (let i = 0; i < totalShips; i++){
-// let ship = new Ship(shipey);
-let ship = new Ship();
-activeShips[i] = ship;
-allShips[i] = ship;
-}
-for (let i = 0; i < totalAsteroids; i++){
-  if (totalAsteroids < maxAsteroids){
-asteroids.push(new Asteroid());
-}
-}
-speedSlider = createSlider(1, 30, 1);
+newGame();
+speedSlider = createSlider(1, 100, 1);
 speedSlider.position(45, 40);
 speedSlider.style('width', '150px');
 
@@ -47,6 +55,10 @@ astSlider.style('width', '150px');
 cookieSlider = createSlider(1, 100, 1);
 cookieSlider.position(45, 274);
 cookieSlider.style('width', '150px');
+
+shipSlider = createSlider(1, 50, 15);
+shipSlider.position(45, 325);
+shipSlider.style('width', '150px');
 
 optButton = createButton(toggle);
 optButton.position(10, 10);
@@ -71,7 +83,11 @@ function resetGame() {
   asteroids.push(new Asteroid());
   }
   nextGeneration();
-
+if (totalShips != activeShips.length) {
+  newGame();
+  highestScore = 0;
+  generations = 0;
+}
 }
 
 function draw() {
@@ -80,6 +96,7 @@ if (options == true){
   speedSlider.show();
   astSlider.show();
   cookieSlider.show();
+  shipSlider.show();
 push()
 fill('white')
 textSize(30)
@@ -89,17 +106,20 @@ text('Alive: ' + activeShips.length, 40, 120)
 text('BestScore: ' + round(highestScore,3), 40, 160)
 text('Total Asteroids: ' + totalAsteroids, 40, 200)
 text('Reward for shooting: ' + cookie, 40, 265)
+text('Total Ships (resets game): ' + totalShips, 40, 320)
 pop()
 }
 else {
   speedSlider.hide();
   astSlider.hide();
   cookieSlider.hide();
+  shipSlider.hide();
 }
 let speed = speedSlider.value();
 totalAsteroids = astSlider.value();
 maxAsteroids = astSlider.value();
 cookie = cookieSlider.value();
+totalShips = shipSlider.value();
 cycles = speed;
 if (asteroids.length == 0){
   for (let i = 0; i < totalAsteroids; i++){
@@ -129,6 +149,7 @@ else {
       for (let k = activeShips.length - 1; k >= 0; k--){
         if (lazers[i].id == activeShips[k].id) {
           activeShips[k].score += cookie;
+          activeShips[k].shots++;
           if (activeShips[k].score > highestScore) {
             highestScore = activeShips[k].score
           }
@@ -179,46 +200,46 @@ if (shows == false){
     lazer.show();
   }
 }
-else if (activeShips[0]){
-  activeShips[0].show();
-  for (let asteroid of asteroids){
-    asteroid.show();
-  }
-
-  for (let i = lazers; i >= 0; i--){
-
-    if (lazers[0]){
-  if (lazers[i].id == activeShips[0].id){
-    lazers[i].show();
-  }
-}
-  }
-
-}
-
-}
-
-
-// function keyPressed() {
-//
-// if (keyCode === UP_ARROW) {
-// // resetGame();
-// }
-//
-//
-// else if (keyCode === DOWN_ARROW) {
-// //Down
-// }
-// else if (keyCode === LEFT_ARROW) {
-// //left
-// }
-// else if (keyCode === RIGHT_ARROW) {
-// //Right
-// }
-// else if (key == ' ') {
-//   if (shows == true){
-//     shows = false;
+// else if (activeShips[0]){
+//   activeShips[0].show();
+//   for (let asteroid of asteroids){
+//     asteroid.show();
 //   }
-//     else {shows = true;}
+//
+//   for (let i = lazers; i >= 0; i--){
+//
+//     if (lazers[0]){
+//   if (lazers[i].id == activeShips[0].id){
+//     lazers[i].show();
+//   }
 // }
+//   }
+//
 // }
+
+}
+
+
+function keyPressed() {
+
+if (keyCode === UP_ARROW) {
+// resetGame();
+}
+
+
+else if (keyCode === DOWN_ARROW) {
+//Down
+}
+else if (keyCode === LEFT_ARROW) {
+//left
+}
+else if (keyCode === RIGHT_ARROW) {
+//Right
+}
+else if (key == ' ') {
+  if (shows == true){
+    shows = false;
+  }
+    else {shows = true;}
+}
+}
