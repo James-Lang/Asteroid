@@ -24,8 +24,6 @@ this.reloadTime = 100;
 this.reloadTimer = 0;
 this.id = random(10);
 this.score = 0;
-this.maxFuel = 75;
-this.fuel = 75;
 this.shots = 0;
 if (brain instanceof NeuralNetwork) {
   // console.log('copied');
@@ -37,7 +35,7 @@ if (brain instanceof NeuralNetwork) {
 
 } else {
 
-  this.brain = new NeuralNetwork(15, 28, 5);
+  this.brain = new NeuralNetwork(14, 28, 5);
 }
 }
 
@@ -98,9 +96,8 @@ if (max(diff) < record) {
   inputs[9] = velY;
   inputs[10] = asteroidXvel
   inputs[11] = asteroidYvel
-  inputs[12] = this.fuel;
-  inputs[13] = rote;
-  inputs[14] = this.shots
+  inputs[12] = rote;
+  inputs[13] = this.shots
   let action = this.brain.predict(inputs);
   // console.log(action);
   if (action[0] > 0.8) {
@@ -108,11 +105,11 @@ if (max(diff) < record) {
   }
   if (action[1] > action[2] + action[3]){
     this.setRotation(0.10)
-    this.fuel -= .05;
+
   }
   else if (action[2] > action[1] + action[3]) {
     this.setRotation(-0.10);
-    this.fuel -= .05;
+
   }
   else  {
     this.setRotation(0);
@@ -139,7 +136,6 @@ return new Ship(this.brain);
 
 
 update(reward) {
-  this.fuel -= 0.05;
   this.score += reward;
   if (this.reloadTimer > 0) {
     this.reloadTimer--;
