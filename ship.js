@@ -1,6 +1,6 @@
 function mutater(x) {
           // console.log('yes');
-  if (random(1) < 0.5) {
+  if (random(1) < mutationRate) {
     let offset = randomGaussian() * 0.5;
     let newx = x + offset;
     return newx;
@@ -20,7 +20,7 @@ this.heading = 0;
 this.rotation = 0;
 this.vel = createVector(0, 0);
 this.isBoosting = false;
-this.reloadTime = 40;
+this.reloadTime = 100;
 this.reloadTimer = 0;
 this.id = random(10);
 this.score = 0;
@@ -37,7 +37,7 @@ if (brain instanceof NeuralNetwork) {
 
 } else {
 
-  this.brain = new NeuralNetwork(15, 32, 5);
+  this.brain = new NeuralNetwork(15, 28, 5);
 }
 }
 
@@ -121,7 +121,7 @@ if (max(diff) < record) {
   }
   if (action[4] > 0.8) {
     this.isBoosting = true;
-    this.score += 0.1;
+    // this.score += 0.1;
   }
   else {
     this.isBoosting = false;
