@@ -138,9 +138,9 @@ return new Ship(this.brain);
 
 
 
-update() {
+update(reward) {
   this.fuel -= 0.05;
-  this.score + 0.002;
+  this.score += reward;
   if (this.reloadTimer > 0) {
     this.reloadTimer--;
   }
