@@ -136,7 +136,7 @@ return new Ship(this.brain);
 
 
 update(reward) {
-  this.score += reward;
+  //this.score += reward;
   if (this.reloadTimer > 0) {
     this.reloadTimer--;
   }
