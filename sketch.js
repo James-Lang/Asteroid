@@ -208,6 +208,7 @@ activeShips[i].think(asteroids);
 }
 for (let j = asteroids.length - 1; j >= 0; j--) {
   if (activeShips[i] && activeShips[i].hits(asteroids[j])) {
+    activeShips[i].score *= 0.05;
     activeShips.splice(i, 1);
   }
 }
