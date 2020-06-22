@@ -196,7 +196,7 @@ else {
   }
   }
 }
-if (activeShips.length == 0) {
+if (activeShips.length <= 5) {
   resetGame();
 }
 for (let i = activeShips.length - 1; i >= 0; i--){
