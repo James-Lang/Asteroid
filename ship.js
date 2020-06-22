@@ -20,7 +20,7 @@ this.heading = 0;
 this.rotation = 0;
 this.vel = createVector(0, 0);
 this.isBoosting = false;
-this.reloadTime = 20;
+this.reloadTime = 50;
 this.reloadTimer = 0;
 this.id = random(10);
 this.score = 0;
@@ -35,7 +35,7 @@ if (brain instanceof NeuralNetwork) {
 
 } else {
 
-  this.brain = new NeuralNetwork(14, 28, 5);
+  this.brain = new NeuralNetwork(14, 9, 5);
 }
 }
 
