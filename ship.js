@@ -20,7 +20,7 @@ this.heading = 0;
 this.rotation = 0;
 this.vel = createVector(0, 0);
 this.isBoosting = false;
-this.reloadTime = 50;
+this.reloadTime = 100;
 this.reloadTimer = 0;
 this.id = random(10);
 this.score = 0;
@@ -35,7 +35,7 @@ if (brain instanceof NeuralNetwork) {
 
 } else {
 
-  this.brain = new NeuralNetwork(14, 9, 5);
+  this.brain = new NeuralNetwork(14, 19, 5);
 }
 }
 
@@ -103,11 +103,11 @@ if (max(diff) < record) {
   if (action[0] > 0.8) {
     this.shoot();
   }
-  if (action[1] > action[2] + action[3]){
+  if (action[1] > 0.5){
     this.setRotation(0.10)
 
   }
-  else if (action[2] > action[1] + action[3]) {
+  else if (action[2] > 0.5) {
     this.setRotation(-0.10);
 
   }
@@ -116,7 +116,7 @@ if (max(diff) < record) {
     // this.score++
 
   }
-  if (action[4] > 0.8) {
+  if (action[4] > 0.5) {
     this.isBoosting = true;
     // this.score += 0.1;
   }
