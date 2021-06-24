@@ -103,11 +103,11 @@ if (max(diff) < record) {
   if (action[0] > 0.8) {
     this.shoot();
   }
-  if (action[1] > 0.5){
+  if (action[1] > 0.9){
     this.setRotation(0.10)
 
   }
-  else if (action[2] > 0.5) {
+  else if (action[2] > 0.9) {
     this.setRotation(-0.10);
 
   }
