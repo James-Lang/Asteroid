@@ -100,14 +100,14 @@ if (max(diff) < record) {
   inputs[13] = this.shots
   let action = this.brain.predict(inputs);
   // console.log(action);
-  if (action[0] > 0.8) {
+  if (action[0] > 0.99) {
     this.shoot();
   }
-  if (action[1] > 0.9){
+  if (action[1] > 0.99){
     this.setRotation(0.10)
 
   }
-  else if (action[2] > 0.9) {
+  else if (action[2] > 0.99) {
     this.setRotation(-0.10);
 
   }
@@ -116,7 +116,7 @@ if (max(diff) < record) {
     // this.score++
 
   }
-  if (action[4] > 0.5) {
+  if (action[4] > 0.99) {
     this.isBoosting = true;
     // this.score += 0.1;
   }
